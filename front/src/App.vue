@@ -12,13 +12,10 @@ import TheWelcome from './components/TheWelcome.vue'
     </div>
   </header>
 
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
 <style>
-@import './assets/base.css';
+@import '../public/index.html';
 
 #app {
   max-width: 1280px;
