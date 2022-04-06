@@ -1,13 +1,14 @@
 const express = require("express");
 const path = require("path");
 const helmet = require("helmet");
-const rateLimit = require("./middleware/rate-limit");
 const postRoutes = require("./routes/post");
 const userRoutes = require("./routes/user");
 require("dotenv").config();
 
 // Création de l'application express
 const app = express();
+
+const mysqlconnection = require("./db/db.mysql");
 
 // Middleware Header pour contourner les erreurs en débloquant certains systèmes de sécurité CORS, afin que tout le monde puisse faire des requetes depuis son navigateur
 app.use((req, res, next) => {
@@ -28,7 +29,6 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: "500MB" }));
 app.use(helmet()); // utilisation du module 'helmet' pour la sécurité en protégeant l'application des failles XSS ciblant les cookies
-app.use(rateLimit); //limitation du nombre de requetes
 app.use("/images", express.static(path.join(__dirname, "images"))); // Middleware permettant de charger les fichiers qui sont dans le repertoire images
 
 app.use("/api/posts", postRoutes);
