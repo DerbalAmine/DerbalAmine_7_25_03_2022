@@ -8,7 +8,7 @@ require("dotenv").config();
 // Création de l'application express
 const app = express();
 
-const mysqlconnection = require("./db/db.mysql");
+const mysql = require("./db/db.mysql");
 
 // Middleware Header pour contourner les erreurs en débloquant certains systèmes de sécurité CORS, afin que tout le monde puisse faire des requetes depuis son navigateur
 app.use((req, res, next) => {
@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: "500MB" }));
 app.use(helmet()); // utilisation du module 'helmet' pour la sécurité en protégeant l'application des failles XSS ciblant les cookies
 app.use("/images", express.static(path.join(__dirname, "images"))); // Middleware permettant de charger les fichiers qui sont dans le repertoire images
-
+app.use(mysql());
 app.use("/api/posts", postRoutes);
 app.use("/api/auth", userRoutes);
 
