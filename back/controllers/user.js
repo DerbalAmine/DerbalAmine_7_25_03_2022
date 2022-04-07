@@ -6,7 +6,7 @@ const mysqlconnection = require("../db/db.mysql"); //importation mysqlconnection
 
 //Inscription
 exports.signup = (req, res) => {
-  //Verification email disponible
+  //chercher dans la base de donnee si email disponible
   mysqlconnection.query(
     `SELECT * FROM user WHERE email='${req.body.email}'`,
     (error, results) => {
@@ -18,10 +18,10 @@ exports.signup = (req, res) => {
         //Cryptage du MDP
         bcrypt
           .hash(req.body.password, 10)
-          .then((cryptedPassword) => {
+          .then((hash) => {
             //Ajout à la BDD
             mysqlconnection.query(
-              `INSERT INTO user VALUES (NULL, '${req.body.username}', '${req.body.email}', '${cryptedPassword}')`,
+              `INSERT INTO user VALUES ('${req.body.username}', '${req.body.email}', '${hash}')`,
               (error, results) => {
                 if (error) {
                   console.log(error);
@@ -49,28 +49,25 @@ exports.login = (req, res) => {
   console.log(req.body.email);
   mysqlconnection.query(
     `SELECT * FROM user WHERE email='${req.body.email}'`,
-    (error, result, rows) => {
+    (error, result) => {
       //Si utilisateur trouvé :
       if (result.length > 0) {
         //Verification du MDP
         bcrypt.compare(req.body.password, result[0].password).then((valid) => {
           //Si MDP est invalide erreur
           if (!valid) {
-            res.json({ message: "Mot de passe incorrect." });
+            res.json({ message: "Mot de passe incorrect !" });
             //Si MDP valide création d'un token
           } else {
             res.json({
               id: result[0].id,
               username: result[0].username,
+              message: "utilisateur trouvee",
               email: result[0].email,
               token: jwt.sign(
-                {
-                  userId: result[0].id,
-                },
-                "RANDOM_TOKEN_SECRET",
-                {
-                  expiresIn: "24h",
-                }
+                { userId: user._id },
+                "RANDOM_TOKEN_SECRET", //nous utilisons une chaîne secrète de développement temporaire RANDOM_SECRET_KEY pour encoder notre token (à remplacer par une chaîne aléatoire beaucoup plus longue pour la production)
+                { expiresIn: "24h" }
               ),
             });
           }
@@ -86,7 +83,7 @@ exports.login = (req, res) => {
 // Delete User
 exports.deleteUser = (req, res) => {
   mysqlconnection.query(
-    `DELETE FROM users WHERE id = ${req.params.id}`,
+    `DELETE FROM user WHERE id = ${req.params.id}`,
     (error, result) => {
       if (error) {
         return res.json({ error });

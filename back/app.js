@@ -27,7 +27,6 @@ app.use((req, res, next) => {
 
 //bodyParser etant deprecated, on utilise directement la méthode express.json
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json({ limit: "500MB" }));
 app.use(helmet()); // utilisation du module 'helmet' pour la sécurité en protégeant l'application des failles XSS ciblant les cookies
 app.use("/images", express.static(path.join(__dirname, "images"))); // Middleware permettant de charger les fichiers qui sont dans le repertoire images
 app.use(mysql());
