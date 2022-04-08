@@ -62,7 +62,7 @@ exports.login = (req, res) => {
             res.json({
               id: result[0].id,
               username: result[0].username,
-              message: "utilisateur trouvee",
+              message: "utilisateur trouve",
               email: result[0].email,
               token: jwt.sign(
                 { userId: user._id },

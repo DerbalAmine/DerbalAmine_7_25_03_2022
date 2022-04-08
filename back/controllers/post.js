@@ -17,7 +17,7 @@ exports.newComment = (req, res, next) => {
 // Get all comments
 exports.getAllComments = (req, res, next) => {
   mysqlconnection.query(
-    `SELECT * FROM comments INNER JOIN comments ON user.id = comments.id_user WHERE comments.id_post = ${req.params.id} `,
+    `SELECT * FROM comments INNER JOIN user ON user.id = comments.id_user WHERE comments.id_post = ${req.params.id} `, // permet de lier plusieurs tables entre elles par une colonne commune grace a 'ON' on lie les collones
     (error, result) => {
       if (error) {
         return res.status(400).json({
@@ -37,7 +37,7 @@ exports.deleteComment = (req, res) => {
         return res.status(400).json({ error });
       } else {
         console.log(result);
-        return res.status(200).json({ message: "Commentaire supprimé ! " });
+        return res.status(200).json({ message: "Votre commentaire est supprimé ! " });
       }
     }
   );
@@ -68,7 +68,7 @@ exports.newPost = (req, res, next) => {
   mysqlconnection.query(
     `INSERT INTO posts VALUES (NULL, '${req.body.id_user}', '${req.body.titre}', '${req.body.texte}', 
       '${imageUrl}')`,
-    (error, result, field) => {
+    (error, result) => {
       if (error) {
         return res.status(400).json({
           error,
@@ -83,7 +83,7 @@ exports.newPost = (req, res, next) => {
 // OnePost
 exports.getOnePost = (req, res, next) => {
   mysqlconnection.query(
-    `SELECT * FROM posts INNER JOIN users ON posts.id_user = users.id WHERE id_post = ${req.params.id}`,
+    `SELECT * FROM posts INNER JOIN user ON posts.id_user = user.id WHERE id_post = ${req.params.id}`,
     (error, result) => {
       if (error) {
         return res.status(400).json({
