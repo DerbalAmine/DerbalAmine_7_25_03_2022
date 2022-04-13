@@ -19,10 +19,16 @@ exports.signup = (req, res) => {
         bcrypt
           .hash(req.body.password, 10)
           .then((hash) => {
+            console.log(hash);
+           //donnees que je vais envoyer 
+            const user = {
+              email: req.body.email,
+              password: hash,
+              username: req.body.username,
+            };
             //Ajout à la BDD
             mysqlconnection.query(
-              `INSERT INTO user VALUES ('${req.body.username}', '${req.body.email}', '${hash}')`,
-              (error, results) => {
+              "INSERT INTO user SET ?",user, (error, results) => {
                 if (error) {
                   console.log(error);
                   res.json({ error });

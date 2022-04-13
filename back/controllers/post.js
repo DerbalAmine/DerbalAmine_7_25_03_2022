@@ -37,7 +37,9 @@ exports.deleteComment = (req, res) => {
         return res.status(400).json({ error });
       } else {
         console.log(result);
-        return res.status(200).json({ message: "Votre commentaire est supprimé ! " });
+        return res
+          .status(200)
+          .json({ message: "Votre commentaire est supprimé ! " });
       }
     }
   );
@@ -55,7 +57,7 @@ exports.getAllPost = (req, res, next) => {
   });
 };
 // NewPost
-exports.newPost = (req, res, next) => {
+exports.createPost = (req, res, next) => {
   let imageUrl = "";
   if (req.file) {
     imageUrl = `${req.protocol}://${req.get("host")}/images/${
@@ -95,7 +97,7 @@ exports.getOnePost = (req, res, next) => {
   );
 };
 // Delete OnePost
-exports.deleteOnePost = (req, res, next) => {
+exports.deletePost = (req, res, next) => {
   mysqlconnection.query(
     `DELETE FROM posts WHERE id_post = ${req.params.id}`,
     (error, result) => {
@@ -109,7 +111,7 @@ exports.deleteOnePost = (req, res, next) => {
   );
 };
 // Modify OnePost
-exports.modifyOnePost = (req, res, next) => {
+exports.modifyPost = (req, res, next) => {
   mysqlconnection.query(
     `UPDATE posts SET title = '${req.body.title}', content = '${req.body.content}' WHERE posts.id = ${req.params.id}`,
     (error, result) => {
