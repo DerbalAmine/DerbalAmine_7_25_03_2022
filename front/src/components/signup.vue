@@ -29,13 +29,15 @@ export default {
               id:'',
               username:'',
               email:'',
-              password:''
+              password:'',
+              isAdmin:'',
+              isActif:''
           }
       }
   },
   methods: {
       createUser(e) {
-        axios.post("http://localhost:3001/api/auth/signup/",this.formData, {
+        axios.post("http://localhost:3000/api/signup/",this.formData, {
             headers: {
                 'Content-Type': 'application/json'
             }

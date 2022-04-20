@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt"); // hash du mdp;
 const jwt = require("jsonwebtoken"); //importation du package jsonwebtoken
 const dotenv = require("dotenv"); // importation pour l'utilisation des variables d'environnements
-dotenv.config;
+dotenv.config();
 const mysqlconnection = require("../db/db.mysql"); //importation mysqlconnection
 
 //Inscription
@@ -20,15 +20,19 @@ exports.signup = (req, res) => {
           .hash(req.body.password, 10)
           .then((hash) => {
             console.log(hash);
-           //donnees que je vais envoyer 
+            //donnees que je vais envoyer
             const user = {
               email: req.body.email,
               password: hash,
               username: req.body.username,
+              //isAdmin: req.body.isAdmin,
+              //isActif: req.body.isActif,
             };
             //Ajout à la BDD
             mysqlconnection.query(
-              "INSERT INTO user SET ?",user, (error, results) => {
+              "INSERT INTO user SET ?",
+              user,
+              (error, results) => {
                 if (error) {
                   console.log(error);
                   res.json({ error });
@@ -70,8 +74,10 @@ exports.login = (req, res) => {
               username: result[0].username,
               message: "utilisateur trouve",
               email: result[0].email,
+              isAdmin: result[0].isAdmin,
+              isActif: result[0].isActif,
               token: jwt.sign(
-                { userId: user._id },
+                { userId: result[0].id },
                 "RANDOM_TOKEN_SECRET", //nous utilisons une chaîne secrète de développement temporaire RANDOM_SECRET_KEY pour encoder notre token (à remplacer par une chaîne aléatoire beaucoup plus longue pour la production)
                 { expiresIn: "24h" }
               ),

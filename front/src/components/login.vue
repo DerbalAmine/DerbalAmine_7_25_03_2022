@@ -33,7 +33,7 @@ export default {
   },
   methods: {
       login(e) {
-        axios.post("http://localhost:3001/api/auth/login/",this.formData, {
+        axios.post("http://localhost:3000/api/login/",this.formData, {
             headers: {
                 'Content-Type': 'application/json'
             }

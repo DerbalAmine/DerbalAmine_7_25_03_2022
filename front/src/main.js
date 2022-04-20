@@ -8,7 +8,7 @@ createApp(App).use(store).use(router).mount('#app')
 
 //**Global Variables**
 //ApiUrl
-Vue.prototype.$apiUrl = 'http://localhost:3001/api';
+Vue.prototype.$apiUrl = 'http://localhost:3000/api';
 //User / Token
 if (localStorage.user != undefined) {
   Vue.prototype.$token = JSON.parse(localStorage.user).token;
