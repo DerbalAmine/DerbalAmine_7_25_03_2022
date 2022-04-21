@@ -49,7 +49,7 @@ export default {
         .catch((error) => {
                     if (error.response.status === 401) {
                         this.message = "Email non disponible.";
-                        console.log("ereur de l'email");
+                        console.log("erreur de l'email");
                         alert("email non disponible.")
                     }  
                     else if (error.response.status === 400) {

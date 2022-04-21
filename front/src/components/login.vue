@@ -10,11 +10,11 @@
 
             <!-- <router-link to='/' > -->
                 <button id="newPost-btn" type="submit">Connexion</button>
-            <!-- </router-link> 
+            <!-- </router-link> -->
             <div class="error-message">{{message}}</div>
             <router-link to='/signup' id="newPost_container">
-                <a  id="header_link">Pas encore inscrit?</a>
-            </router-link> -->
+                <a  id="header_link">Pas encore inscrit</a>
+            </router-link> 
     </form>
 </section>
 </template>
@@ -43,6 +43,17 @@ export default {
         window.location.href = '/';
         console.log(response);
         })
+        .catch((error) => {
+                if (error.response.status === 404) {
+                    this.message = "Utilisateur inconnu.";
+                }
+                if (error.response.status === 401) {
+                    this.message = "Email ou mot de passe invalide.";
+                }
+                if (error.response.status === 500) {
+                    this.message = "Erreur serveur.";
+                }
+            });
         console.table(this.formData)
         e.preventDefault();
       }
