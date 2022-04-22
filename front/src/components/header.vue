@@ -13,7 +13,10 @@
                     <a class="header_navbar_menu">Accueil</a>
                 </router-link>
                 <router-link to='/newpost'>
-                    <a class="header_navbar_menu">Publier</a>
+                    <a class="header_navbar_menu">Post</a>
+                </router-link>
+                <router-link to='/comments'>
+                <a class="header_navbar_menu">Commentaire</a>
                 </router-link>
                 <router-link to='/profile'>
                     <a class="header_navbar_menu">Profil</a>
@@ -21,6 +24,7 @@
                 <router-link to='/login'>
                     <a class="header_navbar_menu" @click = disconnect()>Déconnexion</a>   
                 </router-link>
+                
             </nav>
         </header>
     </div>

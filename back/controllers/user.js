@@ -25,8 +25,8 @@ exports.signup = (req, res) => {
               email: req.body.email,
               password: hash,
               username: req.body.username,
-              //isAdmin: req.body.isAdmin,
-              //isActif: req.body.isActif,
+              isAdmin: false,
+              isActif: false,
             };
             //Ajout à la BDD
             mysqlconnection.query(
@@ -39,7 +39,10 @@ exports.signup = (req, res) => {
                 } else {
                   console.log("-->results");
                   console.log(results);
-                  res.json({ message: "Utilisateur crée !" });
+                  res.json({
+                    message:
+                      "Votre compte a bien été créé ! Vous pouvez maintenant vous connecter.",
+                  });
                 }
               }
             );
@@ -66,7 +69,9 @@ exports.login = (req, res) => {
         bcrypt.compare(req.body.password, result[0].password).then((valid) => {
           //Si MDP est invalide erreur
           if (!valid) {
-            res.json({ message: "Mot de passe incorrect !" });
+            return res
+              .status(401)
+              .json({ message: "Mot de passe incorrect !" });
             //Si MDP valide création d'un token
           } else {
             res.json({
@@ -93,14 +98,19 @@ exports.login = (req, res) => {
   );
 };
 // Delete User
-exports.deleteUser = (req, res) => {
-  mysqlconnection.query(
-    `DELETE FROM user WHERE id = ${req.params.id}`,
-    (error, result) => {
-      if (error) {
-        return res.json({ error });
+exports.deleteUser = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, config.token);
+  if (decodedToken.role === "admin" && decodedToken.userId !== req.params.id) {
+    mysqlconnection.query(
+      `DELETE FROM user WHERE id = ${req.params.id}`, (error, results, fields) => {
+        if (error) {
+          return res.status(400).json(error);
+        }
+        return res
+          .status(200)
+          .json({ message: "Le compte a bien été supprimé définitivement!" });
       }
-      return res.status(200).json(result);
-    }
-  );
+    );
+  }
 };

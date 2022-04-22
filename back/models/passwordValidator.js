@@ -18,6 +18,6 @@ schema
   .spaces() // Ne doit pas contenir d'espaces
   .is()
   .not()
-  .oneOf(["Passw0rd", "Password123"]); // Blacklister ces valeurs
+  .oneOf(["Password123"]); // Blacklister ces valeurs
 
 module.exports = schema;

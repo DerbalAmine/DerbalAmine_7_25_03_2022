@@ -2,7 +2,7 @@
 <!DOCTYPE>
 <section id="section_new_post">
     <form >
-        <h1 id="h1_new_post">Que voulez-vous dire?</h1>
+        <h1 id="h1_new_post">Partager un contenu</h1>
             <label>Titre</label>
             <input id="post_titre" v-model="formData.titre" required="required"/>
 
@@ -61,7 +61,7 @@ export default {
 <style scoped>
 #section_new_post {
     max-width: 650px;
-    background-color: #183E76;
+    background-color: #b02828;
     margin: 1rem auto;
     height: 100%;
     color: white;

@@ -9,7 +9,7 @@
             <p id="post_id_user" > {{user.email}} </p>
 
             <label v-if="admin">administrateur</label>
-            <p id="post_id_user" > {{user.is_admin}} </p>
+            <p id="post_id_user" > {{user.isAdmin}} </p>
 
             <button @click="deleteUser()" id="delete-btn" type="submit" >Supprimer mon compte</button>
 </section>
@@ -32,8 +32,8 @@ export default {
           console.log(user);
           console.log(userId);
           console.log(user.id);
-          console.log(`http://localhost:3000/api/auth/${user.id}`)
-          axios.delete(`http://localhost:3000/api/auth/${user.id}`,
+          console.log(`http://localhost:3000/api/${user.id}`)
+          axios.delete(`http://localhost:3000/api/${user.id}`,
           {
               headers: {
               'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export default {
       },
       checkIfadmin () {
             let user = JSON.parse(localStorage.getItem('user'));
-            if (user.is_admin !== '') {
+            if (user.isAdmin !== '') {
                 this.admin = true;
                 console.log("administrateur");
             }

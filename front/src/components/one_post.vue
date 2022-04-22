@@ -33,11 +33,10 @@ export default {
   methods: {
       getOnePost (){  
         this.post = this.$route.params.id
-        axios.get(`http://localhost:3001/api/posts/${this.post}`,
+        axios.get(`http://localhost:3000/api/posts/${this.post}`,
         {
           headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${this.$token}`
           }
         })
         .then(res=> {
@@ -48,7 +47,7 @@ export default {
       deleteOnePost(){ 
         this.post = this.$route.params.id
         console.log(this.post)
-        axios.delete(`http://localhost:3001/api/posts/${this.post}`,
+        axios.delete(`http://localhost:3000/api/posts/${this.post}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -57,11 +56,11 @@ export default {
         })
         .then(location.href = "/")
         .then(console.log("test"))
-        .catch(err => console.log(err.message))
+        .catch(error => console.log(error.message))
       },
       checkIfadmin () {
         let user = JSON.parse(localStorage.getItem('user'));
-        if (user.is_admin !== '') {
+        if (user.isAdmin !== '') {
             this.admin = true;
         }
       }

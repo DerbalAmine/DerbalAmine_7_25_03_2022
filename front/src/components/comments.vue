@@ -38,7 +38,7 @@ export default {
   methods: {
       sendComment(e) {
         this.post = this.$route.params.id
-        axios.post(`http://localhost:3001/api/posts/${this.post}/comment`,this.formData, {
+        axios.post(`http://localhost:3000/api/posts/${this.post}/comment`,this.formData, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -63,7 +63,7 @@ export default {
       },
       deleteComment (commentId) {
         console.log(user.token)
-        axios.delete(`http://localhost:3001/api/posts/comment/${commentId}`,this.formData, {
+        axios.delete(`http://localhost:3000/api/posts/comment/${commentId}`,this.formData, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + user.token
