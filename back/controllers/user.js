@@ -103,19 +103,12 @@ exports.login = (req, res) => {
 };
 // Delete User
 exports.deleteUser = (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, config.token);
-  if (decodedToken.role === "admin" && decodedToken.userId !== req.params.id) {
-    mysqlconnection.query(
-      `DELETE FROM user WHERE id = ${req.params.id}`,
-      (error, results, fields) => {
-        if (error) {
-          return res.status(400).json(error);
-        }
-        return res
-          .status(200)
-          .json({ message: "Le compte a bien été supprimé définitivement!" });
+  mysqlconnection.query(`DELETE FROM user WHERE id = ${req.params.id}`, (error, result, field) => {
+      if (error) {
+          return res.status(400).json({
+              error
+          });
       }
-    );
-  }
+      return res.status(200).json(result);
+  });
 };

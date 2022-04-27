@@ -77,7 +77,7 @@ export default {
       },
       checkIfadmin () {
         let user = JSON.parse(localStorage.getItem('user'));
-        if (user.is_admin !== '') {
+        if (user.isAdmin !== '') {
             this.admin = true;
         }
       }

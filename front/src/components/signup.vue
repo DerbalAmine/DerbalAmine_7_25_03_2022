@@ -54,8 +54,6 @@ export default {
                     }  
                     else if (error.response.status === 400) {
                         this.message = "vous devez utiliser  maj, min, chiffres.";
-                        console.log("vous devez utiliser  maj, min, chiffres.");
-                        alert("vous devez utiliser  maj, min, chiffres.")
                     }  
                 });
         console.warn(this.formData)
