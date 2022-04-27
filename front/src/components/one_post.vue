@@ -7,9 +7,7 @@
           <div id="one-post-global-text" >{{ this.post.texte}}</div> 
           <img v-if="post.media != null" :src="post.media" alt="image" id="post-global-img"/>
           <p id="one-post-global-text-username"> {{ this.post.username }} </p>
-          
           <button v-if="admin || this.post.id_user == user.id" @click="deleteOnePost()" id="btn_new_post" class="btn_delete" type="submit"> Supprimer </button> 
-          <!-- //v-if="is_admin" -->
     </div>
   </section>
 </template>
@@ -46,7 +44,6 @@ export default {
       },
       deleteOnePost(){ 
         this.post = this.$route.params.id
-        console.log(this.post)
         axios.delete(`http://localhost:3000/api/posts/${this.post}`,
         {
           headers: {

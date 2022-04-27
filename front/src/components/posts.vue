@@ -16,6 +16,7 @@
 </template>
 
 <script>
+
 let user = JSON.parse(localStorage.getItem('user'));
 export default {
   name: 'Posts',
@@ -35,6 +36,7 @@ export default {
 }
 </script>
 
+ 
 <style  scoped>
 #h1_post { 
     color: black;

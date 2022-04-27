@@ -38,7 +38,7 @@ export default {
   methods: {
       sendComment(e) {
         this.post = this.$route.params.id
-        axios.post(`http://localhost:3000/api/posts/${this.post}/comment`,this.formData, {
+        axios.post(`http://localhost:3000/api/posts/`,this.formData, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -53,7 +53,7 @@ export default {
       },
       getAllComments() {
         this.post = this.$route.params.id 
-        fetch(`http://localhost:3001/api/posts/${this.post}/comments`)
+        fetch(`http://localhost:3000/api/posts/${this.post}/comments`)
         .then(res => res.json())
         .then(data => this.comments = data)
         .catch(err => console.log(err.message))

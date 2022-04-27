@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet()); // utilisation du module 'helmet' pour la sécurité en protégeant l'application des failles XSS ciblant les cookies
 app.use("/images", express.static(path.join(__dirname, "images"))); // Middleware permettant de charger les fichiers qui sont dans le repertoire images
-app.use("/api/post", postRoutes);
+app.use("/api/posts", postRoutes);
 app.use("/api", userRoutes);
 
 module.exports = app;

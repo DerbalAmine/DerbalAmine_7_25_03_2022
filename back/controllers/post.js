@@ -58,18 +58,11 @@ exports.getAllPost = (req, res, next) => {
 };
 // NewPost
 exports.createPost = (req, res, next) => {
-  let imageUrl = "";
-  if (req.file) {
-    imageUrl = `${req.protocol}://${req.get("host")}/images/${
-      req.file.filename
-    }`;
-  } else {
-    imageUrl = req.body.media;
-  }
-
+  const media = req.file ? req.file.filename : "";
   mysqlconnection.query(
-    `INSERT INTO posts VALUES (NULL, '${req.body.id_user}', '${req.body.titre}', '${req.body.texte}', 
-      '${imageUrl}')`,
+    `INSERT INTO posts (id_user, titre, texte, media, date_add, date_update) VALUES (?, ?, ?, ?, NOW(), NOW())`,
+    [req.body.id_user, req.body.titre, req.body.texte, media],
+
     (error, result) => {
       if (error) {
         return res.status(400).json({
@@ -82,6 +75,7 @@ exports.createPost = (req, res, next) => {
     }
   );
 };
+
 // OnePost
 exports.getOnePost = (req, res, next) => {
   mysqlconnection.query(

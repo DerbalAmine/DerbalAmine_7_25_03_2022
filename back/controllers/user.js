@@ -6,6 +6,10 @@ const mysqlconnection = require("../db/db.mysql"); //importation mysqlconnection
 
 //Inscription
 exports.signup = (req, res) => {
+  let isAdmin = false;
+  if (req.body.email == "admin@gm.com") {
+    isAdmin = true;
+  }
   //chercher dans la base de donnee si email disponible
   mysqlconnection.query(
     `SELECT * FROM user WHERE email='${req.body.email}'`,
@@ -25,7 +29,7 @@ exports.signup = (req, res) => {
               email: req.body.email,
               password: hash,
               username: req.body.username,
-              isAdmin: false,
+              isAdmin: isAdmin,
               isActif: false,
             };
             //Ajout à la BDD
@@ -103,7 +107,8 @@ exports.deleteUser = (req, res, next) => {
   const decodedToken = jwt.verify(token, config.token);
   if (decodedToken.role === "admin" && decodedToken.userId !== req.params.id) {
     mysqlconnection.query(
-      `DELETE FROM user WHERE id = ${req.params.id}`, (error, results, fields) => {
+      `DELETE FROM user WHERE id = ${req.params.id}`,
+      (error, results, fields) => {
         if (error) {
           return res.status(400).json(error);
         }

@@ -32,17 +32,16 @@ export default {
   },
   methods: {
       onFileSelected(event) {
-        this.file = event.target.files[0];
-        var reader = new FileReader();
-        reader.onloadend = () => {
-            // console.log('RESULT', reader.result)
-            this.formData.media = reader.result;
-        }
-        reader.readAsDataURL(this.file);
+        this.file = event.target.files[0]? event.target.files[0] : '';
       },
+      
       createPost(e) {
-        console.log()
-        axios.post("http://localhost:3000/api/posts/", this.formData,  {
+        const formDat = new FormData();        
+        formDat.append('titre', this.formData.titre);
+        formDat.append('texte', this.formData.texte);
+        formDat.append('id_user', this.formData.id_user);
+        formDat.append('file', this.file);
+        axios.post("http://localhost:3000/api/posts/", formDat,  {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + user.token
@@ -50,11 +49,12 @@ export default {
         })
         .then (() => {
         alert("votre post a bien été publié");
-        // window.location.href="/";
+         window.location.href="/";
         })
         e.preventDefault();  
     }
   }
+
 }
 </script>
 

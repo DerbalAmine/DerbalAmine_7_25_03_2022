@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
   console.log(req.headers.authorization);
   try {
     const token = req.headers.authorization.split(" ")[1]; //on extrait le token du header "autorization" et on prend la partie située apres l'espace
-    const decodedToken = jwt.verify(token, process.env.AUTH_SECRET); //On utilise la méthode Verify() de JWT pour vérfier que le token est valide
+    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET"); //On utilise la méthode Verify() de JWT pour vérfier que le token est valide
     const userId = decodedToken.userId; //On extrait l'Id du token
     if (req.body.userId && parseInt(req.body.userId) !== parseInt(userId)) {
       //Si l'id de l'utilisateur qui veut faire la requête est différent de l'Id du token
@@ -20,3 +20,5 @@ module.exports = (req, res, next) => {
     });
   }
 };
+//ctrl kc 
+//ctrl k u 
