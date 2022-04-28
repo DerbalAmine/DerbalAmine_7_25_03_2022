@@ -49,11 +49,13 @@ export default {
         .catch((error) => {
                     if (error.response.status === 401) {
                         this.message = "Email non disponible.";
-                        console.log("erreur de l'email");
-                        alert("email non disponible.")
+                        console.log("email non dispo");
+                        alert("email non disponible. Veuillez choisir une autre adresse.")
                     }  
                     else if (error.response.status === 400) {
-                        this.message = "vous devez utiliser  maj, min, chiffres.";
+                        this.message = "Le mot de passe n'est pas assez fort: maj, min, chiffres.";
+                        console.log("Le mot de passe n'est pas assez fort: maj, min, chiffres.");
+                        alert("Le mot de passe n'est pas assez fort: maj, min, chiffres.")
                     }  
                 });
         console.warn(this.formData)
@@ -66,25 +68,23 @@ export default {
 <style scoped>
 
 
-section {
-    background-color:white;
-    max-width: 650px;
-    margin: 0 auto;
-    height: 100%;
-    color: white;
-    padding: 1.5rem;
-    border-radius: 15px;
-}
-form {
-    display: flex;
-    flex-direction: column;
-}
+
+
 #main_logo_login {
     max-width: 40%;
     max-height: 400px;
 }
-label {
-    display: flex;
-    color: black;
+#newPost-btn{
+    width: 100px;
+    background-color: #0065FC;
+    border: none;
+    padding: 10px;
+    border-radius: 15px 15px 15px 15px;
+    color: #fff;
+    font-weight: 100;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 15px;
 }
+
 </style>

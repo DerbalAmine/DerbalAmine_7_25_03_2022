@@ -16,7 +16,7 @@ exports.signup = (req, res) => {
     (error, results) => {
       //Si email deja utilisé
       if (results.length > 0) {
-        res.json({ message: "Email non disponible." });
+        res.status(401).json({ message: "Email indisponible." });
         //Si email disponible
       } else {
         //Cryptage du MDP
@@ -39,11 +39,11 @@ exports.signup = (req, res) => {
               (error, results) => {
                 if (error) {
                   console.log(error);
-                  res.json({ error });
+                return res.status(400).json("erreur!");
                 } else {
                   console.log("-->results");
                   console.log(results);
-                  res.json({
+                 return res.status(201).json({
                     message:
                       "Votre compte a bien été créé ! Vous pouvez maintenant vous connecter.",
                   });

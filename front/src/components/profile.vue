@@ -1,14 +1,14 @@
 <template>
 <!DOCTYPE>
 <section id="section_new_post">
-        <h1>Mon profil</h1>
-            <label>Username</label>
+        
+            <label>Username:</label>
             <p id="post_id_user" > {{user.username}} </p>
 
-            <label>Email</label>
+            <label>Email:</label>
             <p id="post_id_user" > {{user.email}} </p>
 
-            <label v-if="admin">administrateur</label>
+            <label>administrateur:</label>
             <p id="post_id_user" > {{user.isAdmin}} </p>
 
             <button @click="deleteUser()" id="delete-btn" type="submit" >Supprimer mon compte</button>
@@ -61,7 +61,23 @@ form {
     flex-direction: column;
 }
 #post_id_user {
-  padding: 0.5rem;
+  display: flex;
+    align-items: center;
+    margin-right: 2rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+#section_new_post {
+  display: flex;
+    margin-top: 2rem;
+   justify-content: center;
+    align-items: center;
+}
+label{
+ font-size: 15px;
+    color: #0065FC;
+    font-weight: bolder;
 }
 
 </style>

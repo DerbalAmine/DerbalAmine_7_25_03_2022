@@ -6,10 +6,10 @@
             <label>Titre</label>
             <input id="post_titre" v-model="formData.titre" required="required"/>
 
-            <label>Contenu</label>
+            <label>Commentaire</label>
             <textarea id="post_texte" v-model="formData.texte" required="required"></textarea>
             <input type="file" @change="onFileSelected" >
-            <button id="newPost-btn" type="submit" @click="createPost">Publier</button>
+            <button id="newPost-btn" type="submit" @click="createPost">Partager</button>
     </form>
 </section>
 </template>
@@ -32,16 +32,17 @@ export default {
   },
   methods: {
       onFileSelected(event) {
-        this.file = event.target.files[0]? event.target.files[0] : '';
+        this.file = event.target.files[0];
+        var reader = new FileReader();
+        reader.onloadend = () => {
+            // console.log('RESULT', reader.result)
+            this.formData.media = reader.result;
+        }
+        reader.readAsDataURL(this.file);
       },
-      
       createPost(e) {
-        const formDat = new FormData();        
-        formDat.append('titre', this.formData.titre);
-        formDat.append('texte', this.formData.texte);
-        formDat.append('id_user', this.formData.id_user);
-        formDat.append('file', this.file);
-        axios.post("http://localhost:3000/api/posts/", formDat,  {
+        console.log()
+        axios.post("http://localhost:3000/api/posts/", this.formData,  {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + user.token
@@ -49,19 +50,18 @@ export default {
         })
         .then (() => {
         alert("votre post a bien été publié");
-         window.location.href="/";
+        // window.location.href="/";
         })
         e.preventDefault();  
     }
   }
-
 }
 </script>
 
 <style scoped>
 #section_new_post {
     max-width: 650px;
-    background-color: #b02828;
+    background-color: rgb(23, 8, 139);
     margin: 1rem auto;
     height: 100%;
     color: white;
@@ -74,5 +74,19 @@ export default {
 form {
     display: flex;
     flex-direction: column;
+}
+#newPost-btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    background-color: #0065FC;
+    border: none;
+    padding: 10px;
+    border-radius: 15px 15px 15px 15px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.1rem;
+    cursor: pointer
 }
 </style>

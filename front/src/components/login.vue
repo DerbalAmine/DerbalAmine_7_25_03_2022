@@ -66,7 +66,16 @@ export default {
     text-align: left;
 }
 #newPost-btn {
-    margin: 0.5rem;
+    width: 100px;
+    background-color: #0065FC;
+    border: none;
+    padding: 5px;
+    border-radius: 15px 15px 15px 15px;
+    color: #fff;
+    font-weight: 300;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-left: 15px;
 }
 #header_link {
     text-align: left;

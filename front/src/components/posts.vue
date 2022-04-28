@@ -41,4 +41,22 @@ export default {
 #h1_post { 
     color: black;
   }
+  #post-global { 
+  background-color: #183E76;
+  color: white;
+  border-radius: 15px;
+  
+  margin: 0.5rem 0;
+  }
+   #post-global-title { 
+    text-decoration: underline;
+    padding: 1rem;
+  }
+  #post-global-img{
+     width: 100%;
+  }
+  #post-global-btn{
+    margin: 1rem;
+  }
+  
 </style>
